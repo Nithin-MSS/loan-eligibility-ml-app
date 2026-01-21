@@ -50,14 +50,5 @@ loan-eligibility-ml-app/
 │   └── data_generation.py
 
 
----
 
-## 👤 Author
-**M. S. S. Nithin**  
-B.Tech – Computer Science Engineering (AI & ML)
-
----
-
-## 📌 Disclaimer
-This project is for educational and demonstration purposes only.
 
