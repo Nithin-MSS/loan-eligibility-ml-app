@@ -5,7 +5,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 
 # Load dataset
-df = pd.read_csv("data/loan_eligibility_data.csv")
+df = pd.read_csv("Data/loan_eligibility_data.csv")
+
 
 # Encode categorical column
 df = pd.get_dummies(df, columns=["Employment_Type"], drop_first=True)
