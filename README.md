@@ -48,3 +48,16 @@ loan-eligibility-ml-app/
 │   ├── model_training.py
 │   ├── eda.py
 │   └── data_generation.py
+
+
+---
+
+## 👤 Author
+**M. S. S. Nithin**  
+B.Tech – Computer Science Engineering (AI & ML)
+
+---
+
+## 📌 Disclaimer
+This project is for educational and demonstration purposes only.
+
