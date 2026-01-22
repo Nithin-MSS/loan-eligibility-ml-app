@@ -87,6 +87,8 @@ This demonstrates strong **Data Analysis + Visualization** capabilities.
 ---
 
 ## 📂 Project Structure
+
+```text
 loan-eligibility-ml-app/
 │
 ├── app.py                    # Streamlit application (Eligibility, Risk & Sanction)
@@ -99,6 +101,7 @@ loan-eligibility-ml-app/
 │   ├── eda.py                # Exploratory Data Analysis
 │   └── data_generation.py    # Synthetic banking data generation
 └── README.md
+
 
 ---
 
