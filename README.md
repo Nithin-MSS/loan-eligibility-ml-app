@@ -89,15 +89,15 @@ This demonstrates strong **Data Analysis + Visualization** capabilities.
 ## 📂 Project Structure
 loan-eligibility-ml-app/
 │
-├── app.py # Streamlit application
-├── requirements.txt # Project dependencies
+├── app.py                    # Streamlit application (Eligibility, Risk & Sanction)
+├── requirements.txt          # Project dependencies
 ├── Data/
-│ └── loan_eligibility_data.csv
+│   └── loan_eligibility_data.csv
 ├── src/
-│ ├── preprocessing.py
-│ ├── model_training.py
-│ ├── eda.py
-│ └── data_generation.py
+│   ├── preprocessing.py      # Data cleaning & transformations
+│   ├── model_training.py     # Risk logic / model experiments
+│   ├── eda.py                # Exploratory Data Analysis
+│   └── data_generation.py    # Synthetic banking data generation
 └── README.md
 
 ---
