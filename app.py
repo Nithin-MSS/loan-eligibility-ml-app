@@ -13,7 +13,7 @@ st.set_page_config(
 st.title("🏦 Loan Eligibility & Credit Risk Scoring System")
 st.write(
     "An end-to-end FinTech application for loan eligibility assessment, "
-    "credit risk scoring, and data analysis."
+    "credit risk scoring, sanctioned loan estimation, and data analysis."
 )
 
 # ==============================
@@ -31,7 +31,6 @@ def find_column(possible_names):
                 return col
     return None
 
-# Detect columns safely
 COL_INCOME = find_column(["income"])
 COL_LOAN = find_column(["loan"])
 COL_CREDIT = find_column(["credit"])
@@ -71,6 +70,33 @@ def calculate_risk_score(
     return max(score, 0)
 
 # ==============================
+# Sanctioned Loan Calculation
+# ==============================
+def calculate_sanctioned_amount(
+    income,
+    risk_score,
+    employment_type
+):
+    # Base eligibility multiplier (banks use 30–60x monthly income)
+    if employment_type == "Salaried":
+        base_multiplier = 60
+    else:
+        base_multiplier = 48
+
+    base_amount = income * base_multiplier
+
+    # Risk-based adjustment
+    if risk_score >= 70:
+        factor = 1.0
+    elif risk_score >= 40:
+        factor = 0.6
+    else:
+        factor = 0.0
+
+    sanctioned_amount = base_amount * factor
+    return round(sanctioned_amount, -3)
+
+# ==============================
 # Tabs
 # ==============================
 tab1, tab2 = st.tabs(
@@ -78,7 +104,7 @@ tab1, tab2 = st.tabs(
 )
 
 # ============================================================
-# TAB 1 — LOAN ELIGIBILITY & RISK SCORING
+# TAB 1 — LOAN ELIGIBILITY, RISK & SANCTION
 # ============================================================
 with tab1:
     st.subheader("📥 Applicant Details")
@@ -88,7 +114,7 @@ with tab1:
     with col1:
         age = st.slider("Age", 21, 65, 30)
         income = st.number_input("Monthly Income (₹)", min_value=5000, step=1000)
-        loan_amount = st.number_input("Loan Amount (₹)", min_value=50000, step=10000)
+        loan_amount = st.number_input("Requested Loan Amount (₹)", min_value=50000, step=10000)
         credit_score = st.slider("Credit Score", 300, 900, 700)
 
     with col2:
@@ -106,6 +132,7 @@ with tab1:
     past_default = 1 if past_default == "Yes" else 0
 
     if st.button("🔍 Check Loan Eligibility"):
+
         risk_score = calculate_risk_score(
             income,
             loan_amount,
@@ -115,17 +142,39 @@ with tab1:
             employment_type
         )
 
+        sanctioned_amount = calculate_sanctioned_amount(
+            income,
+            risk_score,
+            employment_type
+        )
+
         st.subheader("📊 Risk Assessment")
         st.progress(risk_score / 100)
         st.write(f"**Risk Score:** {risk_score} / 100")
 
         if risk_score >= 70:
-            st.success("✅ Low Risk Applicant — Loan Likely Approved")
+            st.success("✅ Low Risk Applicant — Loan Approved")
         elif risk_score >= 40:
-            st.warning("⚠️ Medium Risk Applicant — Manual Review Needed")
+            st.warning("⚠️ Medium Risk Applicant — Manual Review Required")
         else:
             st.error("❌ High Risk Applicant — Loan Rejected")
 
+        st.subheader("💰 Loan Sanction Decision")
+
+        if sanctioned_amount > 0:
+            st.success(f"**Maximum Loan Amount That Can Be Sanctioned:** ₹ {sanctioned_amount:,}")
+
+            if loan_amount > sanctioned_amount:
+                st.warning(
+                    "Requested loan amount exceeds eligible sanctioned limit. "
+                    "Partial sanction or revised amount recommended."
+                )
+        else:
+            st.error("No loan amount can be sanctioned due to high risk.")
+
+        # ------------------------------
+        # Explanation
+        # ------------------------------
         st.subheader("🧠 Decision Explanation")
 
         explanations = []
@@ -151,7 +200,7 @@ with tab1:
             for e in explanations:
                 st.write(f"- {e}")
         else:
-            st.write("- All major risk factors are within acceptable limits.")
+            st.write("- Applicant meets all major eligibility criteria.")
 
 # ============================================================
 # TAB 2 — DATA ANALYSIS DASHBOARD
@@ -188,9 +237,9 @@ with tab2:
     st.markdown("### 📌 Key Insights")
     st.write(
         "- Credit score strongly influences loan approval decisions.\n"
-        "- High EMI-to-income ratio increases rejection risk.\n"
-        "- Past defaults are a major negative indicator.\n"
-        "- Employment stability affects risk classification."
+        "- Higher income enables larger sanctioned loan amounts.\n"
+        "- Past defaults significantly reduce loan eligibility.\n"
+        "- Employment stability affects maximum sanctionable loan."
     )
 
 # ==============================
