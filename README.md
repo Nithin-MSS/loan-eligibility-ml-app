@@ -85,7 +85,6 @@ This demonstrates strong **Data Analysis + Visualization** capabilities.
 - **Streamlit Cloud Deployment**
 
 ---
-
 ## 📂 Project Structure
 
 ```text
@@ -102,26 +101,3 @@ loan-eligibility-ml-app/
 │   └── data_generation.py    # Synthetic banking data generation
 └── README.md
 
-
-
----
-
-## 🎓 Skills Demonstrated
-- Financial risk analysis
-- Credit decision modeling
-- Explainable AI concepts
-- Data analysis & visualization
-- Production-ready Streamlit deployment
-- Version control with Git
-
----
-
-## 👤 Author
-**M. S. S. Nithin**  
-B.Tech – Computer Science Engineering (AI & ML)
-
----
-
-## 📌 Disclaimer
-This application is built for educational and demonstration purposes only.
-It does not represent real bank approval systems.
